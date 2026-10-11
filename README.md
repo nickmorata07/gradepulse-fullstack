@@ -1,5 +1,7 @@
 # GradePulse
 
+[![Made with AI](https://img.shields.io/badge/Made_with-AI_assistance-blue)](AI-USAGE.md)
+
 GradePulse is a student grade tracker and final-grade forecaster. Students record courses, weighted assessment categories, and scores to monitor their progress and estimate the results needed to reach a target grade.
 
 - **Live app:** https://nickmorata07.github.io/gradepulse-fullstack/
@@ -170,4 +172,4 @@ Before submitting, test the hosted app: register and confirm an account, log in,
 
 ## Credits
 
-Development assistance: OpenAI ChatGPT / Codex. AI use and authorship are recorded in [AI-USAGE.md](AI-USAGE.md); the separate badge documentation is maintained there. Fonts: DM Sans and Manrope, loaded through Google Fonts. Repository license files are retained.
+AI assistance: OpenAI ChatGPT / Codex generated substantial application code and documentation; no meaningful independently written application code is currently claimed. See [AI-USAGE.md](AI-USAGE.md) for the disclosure and earlier-use verification limits. Fonts: DM Sans and Manrope, loaded through Google Fonts. Repository license files are retained.
