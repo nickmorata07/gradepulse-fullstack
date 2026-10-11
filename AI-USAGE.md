@@ -1,69 +1,121 @@
-# AI usage
+# AI Usage — GradePulse
 
-This project was built with AI assistance. This file is the record of it. It is
-graded as the finals badge, and it is worth 100 points.
+This is a retrospective disclosure prepared on October 11, 2026 from the development conversation and public repository history. It was not maintained consistently across all three weeks. I used AI heavily, and I cannot claim that 20% of the application code was independently written by me.
 
-Start it in week 1 and keep it up as you go. The commit history of this file is
-part of the evidence: a file written all at once the night before the deadline
-looks exactly like what it is.
+Earlier versions contained claims that I personally wrote or customized code and links to `commit/main` in a different repository. Those claims and links should not be treated as verified authorship evidence. This update replaces them with specific evidence and an honest account.
 
 ## 1. How I used AI
 
-### 2026-09-24 - Repository setup and branding configuration
+The entries below describe distinct uses, not separate commits for every interaction. Several changes were copied and committed together. A shared commit proves that the files landed, not that every request had its own development commit. Dates below are the documented October 11 integration/disclosure date; earlier unverified dates are not reconstructed.
 
-- **Tool:** Gemini
-- **What I asked for:** Step-by-step guidance on customizing the template repository, including setting up `LICENSE`, editing `client/index.html` tags, and writing the root `README.md` for GradePulse.
-- **What it gave back:** HTML header snippets, updated open-source license text, and structured Markdown for the main project README.
-- **What I kept, what I changed, and why:** I kept the overall HTML meta tag layout but replaced the placeholder app titles with "GradePulse | Grade Tracker & Final Grade Forecaster" to reflect the actual HAU grade tracking application scope.
-- **Commit:** https://github.com/nickmorata07/fullstack-final-project/commit/main
+### 1. Grade forecasting
 
-### 2026-09-24 - PowerShell terminal navigation debugging
+- **Date:** October 11, 2026.
+- **Tool:** OpenAI ChatGPT / Codex.
+- **Request:** I asked for working forecasting features to integrate into my existing Supabase-connected system.
+- **Output:** Forecast calculations, score management, targets, what-if scenarios, CSV export, and database completion flags.
+- **What I kept or changed, and why:** I copied the integrated update into my existing project and retained the existing system connection rather than replacing the entire project. The implementation was AI-written.
+- **Commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/0d0d40235c41ffb6281fcb724f045a0b04a28dc3
 
-- **Tool:** Gemini
-- **What I asked for:** Diagnosis of directory errors encountered when attempting to run `cd client` commands while working inside the `server/` directory.
-- **What it gave back:** Explanation of current working directory context in monorepo structures and navigation commands using relative paths (`cd ..\client`).
-- **What I kept, what I changed, and why:** Kept the exact navigation steps to successfully run the local Vite development build (`npm run dev`) from the correct folder context.
-- **Commit:** https://github.com/nickmorata07/fullstack-final-project/commit/main
+### 2. Real account login
 
-### 2026-09-24 - Project Increment Report scaffolding
+- **Date:** October 11, 2026.
+- **Tool:** OpenAI ChatGPT / Codex.
+- **Request:** I asked for a login system similar to the account-based system I had seen.
+- **Output:** Supabase signup, email confirmation, login, recovery, session handling and logout.
+- **What I kept or changed, and why:** I kept the supplied AuthGate and configuration, added my actual public settings locally, and tried registration and email confirmation. Configuration and testing do not make the generated Auth code my own.
+- **Commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/0d0d40235c41ffb6281fcb724f045a0b04a28dc3
 
-- **Tool:** Gemini
-- **What I asked for:** Guidance on structuring the Week 1 increment report (`project/REPORT.md` / `project/README.md`) according to course rubrics.
-- **What it gave back:** Markdown structure covering changes made, purpose, blockers encountered, and remaining tasks.
-- **What I kept, what I changed, and why:** Kept the report headings and refined the specific accomplishments and blockers to accurately reflect my setup process in VS Code.
-- **Commit:** https://github.com/nickmorata07/fullstack-final-project/commit/main
+### 3. Lavender dashboard and mobile layout
 
-*(Entries 4 to 6 will be added in Weeks 2 and 3 as API routes and forecasting components are developed.)*
+- **Date:** October 11, 2026.
+- **Tool:** OpenAI ChatGPT / Codex.
+- **Request:** I asked for a lavender-white dashboard and phone accessibility.
+- **Output:** Updated CSS, responsive forms and dashboard layout, and mobile navigation.
+- **What I kept or changed, and why:** I kept the generated styling and opened the published login screen on my phone. I selected the desired style; I did not independently write the CSS.
+- **Commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/0d0d40235c41ffb6281fcb724f045a0b04a28dc3
+
+### 4. Authenticated API and private records
+
+- **Date:** October 11, 2026.
+- **Tool:** OpenAI ChatGPT / Codex.
+- **Request:** I asked for the system to function with Supabase and account-based features.
+- **Output:** Bearer-token verification, account ownership checks in Express routes, and an additive ownership/RLS migration.
+- **What I kept or changed, and why:** I integrated the generated server files and ran the supplied SQL. The existing-course assignment initially failed because I had left the email placeholder unchanged; that was my setup mistake, not an AI-code defect.
+- **Commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/0d0d40235c41ffb6281fcb724f045a0b04a28dc3
+
+### 5. Deployment configuration
+
+- **Date:** October 11, 2026.
+- **Tool:** OpenAI ChatGPT / Codex.
+- **Request:** I asked how to put the working system on GitHub and make it publicly accessible.
+- **Output:** GitHub Pages workflow configuration, Render deployment settings, environment guidance and authentication redirect setup.
+- **What I kept or changed, and why:** I used the workflow and configured GitHub variables/Render settings. Render first failed because I pasted NAME=value into value fields; I removed those prefixes with guidance. The hosted configuration changes are not Git commits; this link records the workflow code only.
+- **Commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/0d0d40235c41ffb6281fcb724f045a0b04a28dc3
+
+### 6. Setup and API documentation
+
+- **Date:** October 11, 2026.
+- **Tool:** OpenAI ChatGPT / Codex.
+- **Request:** I asked to finish the README for M8A7 after publishing the app.
+- **Output:** A README with live links, fresh installation steps, environment tables, API routes, screenshot guidance, and known limitations.
+- **What I kept or changed, and why:** I copied the documentation, compiled additional screenshots and pushed updates. The original documentation text was AI-assisted; I should review the explanations in my own words.
+- **Commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/d511974ef094d205a7502a30f5c464d35d8c529d
+
+### 7. Security review
+
+- **Date:** October 11, 2026.
+- **Tool:** OpenAI ChatGPT / Codex.
+- **Request:** I asked to complete the M8A7 security checklist.
+- **Output:** All 31 rows with code evidence and honest No/N/A answers where provider settings or live tests were unverified.
+- **What I kept or changed, and why:** I kept the revised review instead of claiming every control passed. I still need to verify outstanding settings and record actual results before changing any No to Yes.
+- **Commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/d511974ef094d205a7502a30f5c464d35d8c529d
 
 ## 2. Where the AI got it wrong
 
-### Case 1 - Incorrect directory path assumption
+These are specific problems in the earlier supplied documentation and instructions that were corrected with AI assistance. I do not claim I independently discovered or coded every correction. Local setup mistakes, such as pasting a variable name into Render's value field, are not counted as AI mistakes.
 
-- **What it gave me:** Shell command steps instructing to execute `cd client` immediately after running package installations inside the `server/` folder.
-- **What was wrong with it:** Executing `cd client` from inside `server/` resulted in a `PathNotFoundException` in PowerShell because `client` lives in the parent root directory, not inside `server/`.
-- **What I did instead:** Executed `cd ..\client` to step back to the root level first before entering the client workspace.
-- **Commit:** https://github.com/nickmorata07/fullstack-final-project/commit/main
+### Case 1: Outdated environment examples
 
-*(Cases 2 and 3 will be logged during backend development and UI integration.)*
+- **Earlier output:** The older client/.env.example said demo mode was the default and used VITE_USE_MOCK_API=true; the old server example omitted the new Auth settings.
+- **Problem:** The current client/src/api/index.js always uses the authenticated API, and server/server.js requires Supabase configuration. Following the examples alone no longer described a working setup.
+- **What I did instead:** I adopted the corrected client/server examples and README supplied during the documentation review. The new examples contain the Auth variables and explain the obsolete mock-mode setting.
+- **Correction commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/d511974ef094d205a7502a30f5c464d35d8c529d
+
+### Case 2: Incorrect security claim about action pinning
+
+- **Earlier output:** The previous checklist marked action pinning Yes while citing actions/checkout@v4 and other version tags.
+- **Problem:** A version tag is moveable and is not a full immutable commit SHA. Using an official action does not satisfy the wording of that check.
+- **What I did instead:** I used the revised checklist that marks this No and describes the actual tags. This is a documentation correction; the workflow has not been converted to SHA pinning.
+- **Correction commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/d511974ef094d205a7502a30f5c464d35d8c529d
+
+### Case 3: Stale local-only access-control and submission documentation
+
+- **Earlier output:** Older project documentation linked a different repository/site, left the hosted API as a placeholder, and described access control/RLS as not applicable to a local prototype.
+- **Problem:** The updated app has Supabase accounts, authenticated routes and a Render backend. Those claims no longer match the implementation and would mislead a reviewer.
+- **What I did instead:** I replaced the project links and checklist with the actual GradePulse URLs, explained the Auth middleware, and left live RLS testing unverified rather than claiming it passed.
+- **Correction commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/d511974ef094d205a7502a30f5c464d35d8c529d
 
 ## 3. Who wrote what
 
-### Written by me
+### My independently written application code
 
-- **File:** `client/index.html`
-- **Commit:** https://github.com/nickmorata07/fullstack-final-project/commit/main
-- **What it does and why it is built this way:** Configures the document head and title tag for the single-page application entry point, ensuring accurate branding and SEO meta descriptions when loaded in the browser.
+I have not independently written meaningful application code for this version. I therefore cannot provide an honest self-authored route, SQL query, or component with commit evidence, and I have not met the required one-fifth self-authored-code rule. I do not count copying generated files, changing environment values, testing, deployment, screenshots, or selecting a design as independently writing the application code.
 
-### The AI-written part I understand best
+My actual work included specifying requirements, integrating supplied updates, configuring Supabase/Render/GitHub, running migrations, troubleshooting with assistance, checking the app and preparing screenshots. These are real project activities, but they do not satisfy the code-authorship requirement by themselves.
 
-- **File:** `README.md`
-- **Commit:** https://github.com/nickmorata07/fullstack-final-project/commit/main
-- **What it does and why we kept it:** Defines the project documentation structure (overview, installation, running instructions, features, and project structure) so external readers can run and evaluate the application from source code alone.
+The original implementation's AI-tool attribution is not independently established by this record. The earlier AI-USAGE.md named Gemini, but its dates, request history, and old commit links have not been verified here. I should confirm that earlier use from my own records rather than invent details.
 
-### 2026-09-27 - PostgreSQL schema and Express API endpoint generation
+### AI-written code explanation to study and rewrite in my own words
 
-- **Tool:** Gemini
-- **What I asked for:** Code templates for `server/schema.sql`, PostgreSQL `pg.Pool` connection pool (`server/db.js`), and Express API routes (`server/index.js`).
-- **What it gave back:** SQL schema DDL scripts, pool connection code using `dotenv`, and REST endpoints (`GET /api/courses`, `POST /api/courses`, `GET /api/courses/:id`).
-- **What I kept, what I changed, and why:** Kept the parameterized query structure (`$1`, `$2`) for security and added custom table definitions (`courses`, `category_weights`, `assessment_scores`) specific to HAU course grading rules.
-- **Commit:** https://github.com/nickmorata07/fullstack-final-project/commit/main
+**Files:** server/server.js and server/app.js. **Commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/0d0d40235c41ffb6281fcb724f045a0b04a28dc3
+
+The Express application protects the /api route group before its data routes run. It extracts the bearer token from the Authorization header and calls the verifier supplied by server/server.js. That verifier asks Supabase auth.getUser to validate the token; a missing or invalid user produces an unauthorized response. It stores the verified user on the request, rather than accepting a user ID from the submitted JSON.
+
+Course queries then include the authenticated user's ID as a SQL parameter, alongside record IDs where necessary. Category and assessment operations join through the parent course to check ownership. This matters because successful login alone does not authorize someone to read another account's records. Parameters also keep user values separate from SQL syntax. The public health/readiness endpoints report limited availability information and do not expose grades.
+
+This explanation was drafted with AI help. I should explain the control flow myself and demonstrate it before presenting it as my own understanding. Reading an explanation is not evidence that I authored the implementation.
+
+## Submission status
+
+The supported AI-use entries, documented corrections, and README credit are provided. The meaningful self-authored-code requirement is unmet. The course lesson says that no meaningful personal code contribution makes section 3 score zero and puts the 75-point badge out of reach. This disclosure does not claim the badge has been earned or guarantee a grade.
