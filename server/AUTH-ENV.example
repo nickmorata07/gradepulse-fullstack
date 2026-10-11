@@ -1,0 +1,6 @@
+# ADD these to your EXISTING server/.env. KEEP DATABASE_URL unchanged.
+SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+SUPABASE_PUBLISHABLE_KEY=YOUR_PUBLIC_PUBLISHABLE_KEY
+# Legacy SUPABASE_ANON_KEY also works.
+# For a deployed frontend, include its exact HTTPS origin here:
+CORS_ORIGINS=http://localhost:5173,http://localhost:5174

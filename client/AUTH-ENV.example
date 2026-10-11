@@ -1,0 +1,8 @@
+# ADD these to your EXISTING client/.env. Do not overwrite other values.
+VITE_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=YOUR_PUBLIC_PUBLISHABLE_KEY
+# Legacy public anon key also works under VITE_SUPABASE_ANON_KEY.
+# NEVER put sb_secret_..., service_role, or DATABASE_URL in client variables.
+# During npm run dev, leave this blank to use the Vite API proxy:
+VITE_API_BASE_URL=
+# Authenticated mode always uses the real API; old mock settings are ignored.

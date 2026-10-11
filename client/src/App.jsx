@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { USING_MOCK_API, listCourses, createCourse, getCourse, deleteCourse, createCategory, createAssessment } from './api'
-import DemoNotice from './components/DemoNotice'
+import ForecastWorkspace from './components/ForecastWorkspace'
+import AuthGate from './components/AuthGate'
 
 const initials = (name = '') => name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join('').toUpperCase()
 const percent = (value) => `${Number(value || 0).toFixed(1)}%`
@@ -17,17 +18,12 @@ function courseProgress(course) {
   const weight = graded.reduce((sum, category) => sum + Number(category.weight_percentage), 0)
   return weight ? graded.reduce((sum, category) => sum + categoryAverage(category) * Number(category.weight_percentage), 0) / weight : null
 }
-function forecast(course) {
-  const categories = course.categories || []
-  const graded = categories.filter((category) => categoryAverage(category) !== null)
-  const completedWeight = graded.reduce((sum, category) => sum + Number(category.weight_percentage), 0)
-  const earned = graded.reduce((sum, category) => sum + categoryAverage(category) * Number(category.weight_percentage) / 100, 0)
-  const remaining = Math.max(0, 100 - completedWeight)
-  if (remaining === 0) return { remaining, required: null, current: earned }
-  return { remaining, required: (Number(course.target_grade) - earned) / (remaining / 100), current: earned }
-}
+export default function App() { return <AuthGate>{({user,signOut}) => <Dashboard key={user.id} user={user} signOut={signOut}/>}</AuthGate> }
 
-export default function App() {
+function Dashboard({user,signOut}) {
+  const studentName = user.user_metadata?.display_name || user.email?.split('@')[0] || 'Student'
+  const [loggingOut,setLoggingOut]=useState(false)
+  async function logout(){setLoggingOut(true);try{const {error}=await signOut();if(error)throw error}catch(e){setError(e.message)}finally{setLoggingOut(false)}}
   const [courses, setCourses] = useState([])
   const [selectedId, setSelectedId] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -107,18 +103,19 @@ export default function App() {
       <button className={`nav-link ${activeView === 'overview' ? 'active' : ''}`} onClick={() => setActiveView('overview')}><span className="nav-icon">◫</span> Overview</button>
       <button className={`nav-link ${activeView === 'courses' ? 'active' : ''}`} onClick={() => setActiveView('courses')}><span className="nav-icon">▤</span> My courses <span className="nav-count">{courses.length}</span></button>
       <button className={`nav-link ${activeView === 'forecaster' ? 'active' : ''}`} onClick={() => { setActiveView('forecaster'); if (!selectedId && courses[0]) setSelectedId(courses[0].id) }}><span className="nav-icon">↗</span> Grade forecaster</button>
-      <div className="sidebar-bottom"><div className="sidebar-mini-card"><div className="mini-icon">✦</div><strong>Small steps. Big progress.</strong><p>Stay on top of every class and plan your next move.</p></div><div className="profile-row"><div className="avatar">GP</div><div><strong>Student workspace</strong><span>Academic dashboard</span></div><span className="profile-dots">•••</span></div></div>
+      <div className="sidebar-bottom"><div className="sidebar-mini-card"><div className="mini-icon">✦</div><strong>Small steps. Big progress.</strong><p>Stay on top of every class and plan your next move.</p></div><div className="profile-row"><div className="avatar">{initials(studentName)}</div><div><strong>{studentName}</strong><span>Your private workspace</span></div><span className="profile-dots">•••</span></div></div>
     </aside>
 
     <main className="main-content" id="top">
-      <header className="topbar"><div className="breadcrumb">Workspace <span>/</span> <strong>{activeView === 'overview' ? 'Overview' : activeView === 'courses' ? 'My courses' : 'Grade forecaster'}</strong></div><div className="topbar-right"><span className={`connection-pill ${USING_MOCK_API ? 'demo' : 'live'}`}><i/>{USING_MOCK_API ? 'Demo data' : 'Connected API'}</span><div className="top-avatar">GP</div></div></header>
+      <header className="topbar"><div className="breadcrumb">Workspace <span>/</span> <strong>{activeView === 'overview' ? 'Overview' : activeView === 'courses' ? 'My courses' : 'Grade forecaster'}</strong></div><div className="topbar-right"><span className={`connection-pill ${USING_MOCK_API ? 'demo' : 'live'}`}><i/>{loading?'Syncing…':error?'Check connection':'Private workspace'}</span><div className="top-avatar" title={user.email}>{initials(studentName)}</div><button className="button button-quiet logout-button" onClick={logout} disabled={loggingOut}>{loggingOut?'Leaving…':'Log out'}</button></div></header>
+      <nav className="mobile-nav" aria-label="Workspace navigation">{[['overview','◫','Overview'],['courses','▤','My courses'],['forecaster','↗','Forecaster']].map(([view,icon,label])=><button key={view} aria-current={activeView===view?'page':undefined} className={activeView===view?'active':''} onClick={()=>setActiveView(view)}><span>{icon}</span>{label}</button>)}</nav>
       <div className="content-wrap">
-        <DemoNotice />
+        
         {error && <div className="alert alert-error" role="alert"><span>!</span><div>{error}</div><button onClick={() => setError('')} aria-label="Dismiss error">×</button></div>}
         {notice && <div className="alert alert-success" role="status"><span>✓</span><div>{notice}</div><button onClick={() => setNotice('')} aria-label="Dismiss notice">×</button></div>}
 
         {activeView === 'overview' && <>
-          <section className="welcome-row"><div><div className="eyebrow"><span className="eyebrow-dot"/> YOUR ACADEMIC COMMAND CENTER</div><h1>Make your next grade<br/><span>your best one yet.</span></h1><p className="page-subtitle">A clearer view of your progress. A smarter plan for what's next.</p></div><button className="button button-primary" onClick={() => setShowCourseForm(true)}><span>＋</span> Add a course</button></section>
+          <section className="welcome-row"><div><div className="eyebrow"><span className="eyebrow-dot"/> WELCOME BACK, {studentName.toUpperCase()}</div><h1>Make your next grade<br/><span>your best one yet.</span></h1><p className="page-subtitle">A clearer view of your progress. A smarter plan for what's next.</p></div><button className="button button-primary" onClick={() => setShowCourseForm(true)}><span>＋</span> Add a course</button></section>
           <section className="stats-grid">
             <article className="stat-card"><div className="stat-top"><span>Enrolled courses</span><span className="stat-icon violet">▤</span></div><div className="stat-number">{loading ? '—' : courses.length.toString().padStart(2, '0')}</div><div className="stat-foot"><span className="stat-foot-dot violet-dot"/> Courses in your workspace</div></article>
             <article className="stat-card"><div className="stat-top"><span>Current average</span><span className="stat-icon green">↗</span></div><div className="stat-number">{loading ? '—' : overallAverage === null ? '—' : percent(overallAverage)}</div><div className="stat-foot"><span className="stat-foot-dot green-dot"/> Across courses with grades</div></article>
@@ -146,10 +143,10 @@ export default function App() {
         {activeView === 'forecaster' && <>
           <section className="page-title-row"><div><div className="eyebrow">PLAN WITH PURPOSE</div><h1>Grade forecaster</h1><p className="page-subtitle">Turn your target into a plan you can work toward.</p></div></section>
           {courses.length > 0 && <label className="course-select-label">Choose a course<select value={selectedId ?? ''} onChange={(e) => setSelectedId(e.target.value)}>{courses.map((course) => <option key={course.id} value={course.id}>{course.course_code} — {course.course_name}</option>)}</select></label>}
-          {!selected ? <div className="empty-state"><div className="empty-icon">↗</div><h3>Add a course to start forecasting</h3><p>Your forecast uses the target grade, category weights, and scores you record.</p><button className="button button-primary" onClick={() => setShowCourseForm(true)}>＋ Add a course</button></div> : <ForecastPanel course={selected} onOpenCourses={() => setActiveView('courses')} />}
+          {!selected ? <div className="empty-state"><div className="empty-icon">↗</div><h3>Add a course to start forecasting</h3><p>Your forecast uses the target grade, category weights, and scores you record.</p><button className="button button-primary" onClick={() => setShowCourseForm(true)}>＋ Add a course</button></div> : <ForecastWorkspace key={selected.id} course={selected} onRefresh={() => refresh(selected.id)} onOpenCourses={() => setActiveView('courses')} />}
         </>}
       </div>
-      <footer className="app-footer"><span>© 2026 GradePulse</span><span>Built for better learning, one score at a time.</span><span className="footer-status"><i/> {USING_MOCK_API ? 'Browser demo' : 'API connected'}</span></footer>
+      <footer className="app-footer"><span>© 2026 GradePulse</span><span>Built for better learning, one score at a time.</span><span className="footer-status"><i/> {loading?'Syncing':error?'Check connection':'Account workspace'}</span></footer>
     </main>
 
     {showCourseForm && <Modal title="Add a course" subtitle="Make space for your next academic goal." onClose={() => setShowCourseForm(false)}><form className="modal-form" onSubmit={submitCourse}><Field label="Course code"><input autoFocus value={courseCode} onChange={(e) => setCourseCode(e.target.value)} placeholder="e.g. CS-401" maxLength="30" required/></Field><Field label="Course name"><input value={courseName} onChange={(e) => setCourseName(e.target.value)} placeholder="e.g. Application and Systems Integration" maxLength="120" required/></Field><Field label="Target grade (%)"><input type="number" value={targetGrade} onChange={(e) => setTargetGrade(e.target.value)} min="0" max="100" step="0.5" required/></Field><div className="modal-actions"><button type="button" className="button button-quiet" onClick={() => setShowCourseForm(false)}>Cancel</button><button className="button button-primary" disabled={saving}>{saving ? 'Saving…' : 'Create course'}</button></div></form></Modal>}
@@ -162,12 +159,6 @@ function CourseCard({ course, index, onOpen, onForecast, active }) {
   const average = courseProgress(course)
   const palettes = ['lavender', 'mint', 'peach']
   return <article className={`course-card ${active ? 'selected-card' : ''}`}><div className="course-card-top"><div className={`course-avatar ${palettes[index % palettes.length]}`}>{initials(course.course_code)}</div><button className="card-menu" aria-label={`Open ${course.course_code}`} onClick={onOpen}>↗</button></div><div className="course-code">{course.course_code}</div><h3>{course.course_name}</h3><div className="course-card-meta"><span>Target grade</span><strong>{percent(course.target_grade)}</strong></div><div className="course-progress"><div className="progress-track"><span style={{ width: `${Math.min(100, average ?? 0)}%` }}/></div><span>{average === null ? 'No grades' : percent(average)}</span></div><div className="course-card-footer"><span>{(course.categories || []).length} categories · {(course.categories || []).reduce((sum, cat) => sum + cat.assessments.length, 0)} scores</span><button onClick={onForecast}>Forecast grade <span>→</span></button></div></article>
-}
-function ForecastPanel({ course, onOpenCourses }) {
-  const result = forecast(course)
-  const canForecast = (course.categories || []).length > 0
-  const impossible = result.required !== null && result.required > 100
-  return <div className="forecast-layout"><section className="forecast-main"><div className="forecast-kicker"><span>✦</span> YOUR PERSONAL FORECAST</div><h2>{course.course_code}<span> / </span>{course.course_name}</h2><p className="forecast-description">Here's what your recorded grades suggest about reaching your target.</p><div className="forecast-result"><div className="forecast-result-top"><span>Average needed on remaining categories</span><span className="forecast-badge">Target · {percent(course.target_grade)}</span></div><div className={`forecast-big-number ${impossible ? 'is-hard' : ''}`}>{!canForecast ? '—' : result.remaining === 0 ? 'Complete' : impossible ? `${percent(result.required)}` : percent(Math.max(0, result.required))}</div><p>{!canForecast ? 'Add grade categories and record scores to unlock your forecast.' : result.remaining === 0 ? 'Every category has a recorded score. Your current weighted result is shown below.' : impossible ? 'Your target may be out of reach with the remaining weight. Consider discussing options with your instructor.' : result.required <= 0 ? 'You have already earned enough weighted points to meet this target, based on the categories recorded.' : `Aim for about ${percent(result.required)} across categories without recorded scores to reach your target.`}</p><div className="forecast-track"><span style={{ width: `${Math.max(0, Math.min(100, result.required ?? 0))}%` }}/></div><div className="track-labels"><span>0%</span><span>100% average</span></div></div><div className="forecast-note"><span>ⓘ</span><p><strong>How this estimate works</strong><br/>Categories with at least one score are treated as completed at their current average. Remaining category weights are treated as future work. This is a planning estimate, not an official university grade calculation.</p></div></section><aside className="forecast-side"><div className="side-stat"><span className="side-stat-icon green">◉</span><div><span>Weighted points earned</span><strong>{percent(result.current)}</strong></div></div><div className="side-stat"><span className="side-stat-icon violet">◷</span><div><span>Weight remaining</span><strong>{percent(result.remaining)}</strong></div></div><div className="side-stat"><span className="side-stat-icon amber">◎</span><div><span>Current category average</span><strong>{courseProgress(course) === null ? '—' : percent(courseProgress(course))}</strong></div></div><div className="side-divider"/><h3>Make your forecast more useful</h3><p>Add your categories and scores to replace the sample estimate with your own progress.</p><button className="button button-primary button-full" onClick={onOpenCourses}>Manage course grades <span>→</span></button></aside></div>
 }
 function Field({ label, children }) { return <label className="form-field"><span>{label}</span>{children}</label> }
 function Modal({ title, subtitle, onClose, children }) { useEffect(() => { const close = (event) => { if (event.key === 'Escape') onClose() }; window.addEventListener('keydown', close); return () => window.removeEventListener('keydown', close) }, [onClose]); return <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose() }}><section className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button className="modal-close" onClick={onClose} aria-label="Close dialog">×</button><div className="modal-symbol">✦</div><h2 id="modal-title">{title}</h2><p>{subtitle}</p>{children}</section></div> }

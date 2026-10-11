@@ -8,15 +8,20 @@
     "dev": "node --env-file=.env --watch server.js",
     "db:schema": "node --env-file=.env db/run.js db/schema.sql",
     "db:seed": "node --env-file=.env db/run.js db/seed.sql",
-    "db:reset": "npm run db:schema && npm run db:seed"
+    "db:reset": "npm run db:schema && npm run db:seed",
+    "test": "node --test test/*.test.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.117.3",
     "cors": "^2.8.5",
     "dotenv": "^18.0.6",
     "express": "^4.21.2",
     "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8"
   }
 }
