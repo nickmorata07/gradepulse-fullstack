@@ -1,14 +1,23 @@
-# Final Project Submission
+# Final Project — GradePulse
 
-**Project:** GradePulse — Student Grade Tracker & Final Grade Forecaster  
-**Repository:** https://github.com/nickmorata07/fullstack-final-project  
-**Live site:** https://nickmorata07.github.io/fullstack-final-project/  
-**API:** Add the deployed API health-check URL after the server is hosted.
+Public repository: https://github.com/nickmorata07/gradepulse-fullstack
 
-## Final demo checklist
+Live app: https://nickmorata07.github.io/gradepulse-fullstack/
 
-- [ ] Confirm whether the live site is in browser demo mode or connected to the API.
-- [ ] Prepare sample courses, categories, and assessment scores before recording.
-- [ ] Demonstrate adding a course, recording a score, and using the grade forecaster.
-- [ ] Explain that the forecast is an estimate based on category weights and recorded scores.
-- [ ] Do not show `.env` files or database credentials in the recording.
+Backend readiness: https://gradepulse-api.onrender.com/readyz
+
+GradePulse lets students track course assessments and weighted grades, then estimate the remaining performance needed to reach a target. It includes Supabase email/password login, account-specific records, a responsive dashboard, and CSV forecast export.
+
+## How to run it
+
+Follow the setup, environment, database migration, and two-terminal instructions in the [project repository README](https://github.com/nickmorata07/gradepulse-fullstack#readme). Node.js 22+, npm, Git, and a Supabase project are required. Never commit actual `.env` files.
+
+## Security
+
+[Completed review with remaining checks](https://github.com/nickmorata07/gradepulse-fullstack/blob/main/SECURITY-CHECKLIST.md)
+
+## AI usage
+
+[AI-USAGE.md](https://github.com/nickmorata07/gradepulse-fullstack/blob/main/AI-USAGE.md) — maintained separately for the AI badge assignment.
+
+Presentation materials will be added for the separate presentation assignment.
