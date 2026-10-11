@@ -97,7 +97,7 @@ These are specific problems in the earlier supplied documentation and instructio
 - **Correction commit:** https://github.com/nickmorata07/gradepulse-fullstack/commit/d511974ef094d205a7502a30f5c464d35d8c529d
 
 ## 3. Who wrote what
-
+  
 ### My independently written application code
 
 I have not independently written meaningful application code for this version. I therefore cannot provide an honest self-authored route, SQL query, or component with commit evidence, and I have not met the required one-fifth self-authored-code rule. I do not count copying generated files, changing environment values, testing, deployment, screenshots, or selecting a design as independently writing the application code.
@@ -115,6 +115,10 @@ The Express application protects the /api route group before its data routes run
 Course queries then include the authenticated user's ID as a SQL parameter, alongside record IDs where necessary. Category and assessment operations join through the parent course to check ownership. This matters because successful login alone does not authorize someone to read another account's records. Parameters also keep user values separate from SQL syntax. The public health/readiness endpoints report limited availability information and do not expose grades.
 
 This explanation was drafted with AI help. I should explain the control flow myself and demonstrate it before presenting it as my own understanding. Reading an explanation is not evidence that I authored the implementation.
+
+### My contribution to development
+
+I directed the changes to the client, including App.jsx, by specifying the dashboard, login, and mobile features I wanted. I integrated the AI-generated updates into my existing system, configured the services, and tested the app. I’m still learning how the client code works; I did not independently write these components.
 
 ## Submission status
 
